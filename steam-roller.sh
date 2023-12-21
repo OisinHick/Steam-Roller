@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function installDecky() {
     # Decky Loader Install - There is also a fast install for those who can use Konsole. https://github.com/SteamDeckHomebrew/decky-loader
     curl -L https://github.com/SteamDeckHomebrew/decky-installer/releases/latest/download/install_release.sh | sh
@@ -77,7 +75,7 @@ function execute_function() {
 if [ $# -eq 0 ]; then
     while true; do
         show_menu
-        read -p "Enter your choice (1-7): " choice
+        read -p "Enter your choice (Decky, Lutris, Heroic, EmuDeck, Cryoutilities, About): " choice
         execute_function "$choice"
     done
 else
@@ -86,3 +84,4 @@ else
         execute_function "$arg"
     done
 fi
+
