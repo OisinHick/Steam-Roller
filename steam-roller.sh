@@ -14,42 +14,59 @@ function installHeroic() {
     flatpak install flathub com.heroicgameslauncher.hgl
 }
 
+function installEmuDeck() {
+    # Install EmuDeck from GitHub
+    curl -L https://raw.githubusercontent.com/dragoonDorise/EmuDeck/main/install.sh | bash
+}
+
+function installCryoutilities() {
+    # Install CryoUtilities from GitHub
+    curl https://raw.githubusercontent.com/CryoByte33/steam-deck-utilities/main/install.sh | bash -s --
+}
+
 function show_about() {
-  clear
-  echo "=== About ==="
-  echo "This is a simple menu system in Bash."
-  echo "Author: Your Name"
-  echo "Version: 1.0"
-  echo "============="
-  read -p "Press Enter to return to the main menu..."
+    clear
+    echo "=== About ==="
+    echo "This is a simple menu system in Bash."
+    echo "Author: Your Name"
+    echo "Version: 1.0"
+    echo "============="
+    read -p "Press Enter to return to the main menu..."
 }
 
-function show_menu() {
-  clear
-  echo "=== Main Menu ==="
-  echo "1. About"
-  echo "2. Exit"
-  echo "================="
+function execute_function() {
+    case $1 in
+        Decky)
+            installDecky
+            ;;
+        Lutris)
+            installLutris
+            ;;
+        Heroic)
+            installHeroic
+            ;;
+        EmuDeck)
+            installEmuDeck
+            ;;
+        Cryoutilities)
+            installCryoutilities
+            ;;
+        *)
+            echo "Invalid choice. Please enter a valid option."
+            ;;
+    esac
 }
 
-while true; do
-  show_menu
-  read -p "Enter your choice (1-2): " choice
-
-  case $choice in
-    1)
-      show_about
-      ;;
-    2)
-      echo "Exiting..."
-      exit 0
-      ;;
-    3)
-      installDecky
-      ;;
-    *)
-      echo "Invalid choice. Please enter a number between 1 and 2."
-      read -p "Press Enter to continue..."
-      ;;
-  esac
-done
+# Check if an argument is provided
+if [ $# -eq 0 ]; then
+    while true; do
+        show_menu
+        read -p "Enter your choice (1-7): " choice
+        execute_function "$choice"
+    done
+else
+    # If arguments are provided, execute the corresponding function
+    for arg in "$@"; do
+        execute_function "$arg"
+    done
+fi
