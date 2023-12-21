@@ -34,6 +34,19 @@ function show_about() {
     read -p "Press Enter to return to the main menu..."
 }
 
+function show_menu() {
+    clear
+    echo "=== Main Menu ==="
+    echo "1. Install Decky"
+    echo "2. Install Lutris"
+    echo "3. Install Heroic"
+    echo "4. Install EmuDeck"
+    echo "5. Install CryoUtilities"
+    echo "6. About"
+    echo "7. Exit"
+    echo "================="
+}
+
 function execute_function() {
     case $1 in
         Decky)
@@ -50,6 +63,9 @@ function execute_function() {
             ;;
         Cryoutilities)
             installCryoutilities
+            ;;
+        About)
+            show_about
             ;;
         *)
             echo "Invalid choice. Please enter a valid option."
