@@ -1,3 +1,11 @@
+#!/bin/bash
+
+# Initialize variables
+file1=""
+file2=""
+file1name=""
+file2name=""
+
 function installDecky() {
     # Decky Loader Install - There is also a fast install for those who can use Konsole. https://github.com/SteamDeckHomebrew/decky-loader
     curl -L https://github.com/SteamDeckHomebrew/decky-installer/releases/latest/download/install_release.sh | sh
@@ -22,6 +30,47 @@ function installCryoutilities() {
     curl https://raw.githubusercontent.com/CryoByte33/steam-deck-utilities/main/install.sh | bash -s --
 }
 
+function store_keys() {
+    read -p "Enter the file path for prod keys: " file1
+    read -p "Enter the file path for title keys: " file2
+
+    # Read file contents into variables
+    file1name=$(basename "$file1")
+    file2name=$(basename "$file2")
+    file1=$(base64 -w 0 "$file1")
+    file2=$(base64 -w 0 "$file2")
+
+    # Update script with key variables
+    update_script
+
+    echo "Keys stored successfully!"
+}
+
+function write_keys() {
+    # Write keys to the file system
+    echo "$file1" | base64 -d > "$file1name"
+    echo "$file2" | base64 -d > "$file2name"
+
+    echo "Keys written to the file system!"
+}
+
+function update_script() {
+    # Create a copy of the script
+    cp "$0" script_temp.sh
+
+    # Modify the copy with updated key variables
+    sed -i "s/^file1=.*/file1=\"$file1\"/" script_temp.sh
+    sed -i "s/^file2=.*/file2=\"$file2\"/" script_temp.sh
+    sed -i "s/^file1name=.*/file1name=\"$file1name\"/" script_temp.sh
+    sed -i "s/^file2name=.*/file2name=\"$file2name\"/" script_temp.sh
+
+    # Open the new script in a separate terminal
+    xterm -e "bash script_temp.sh" &
+
+    # Delete the original script
+    rm "$0"
+}
+
 function show_about() {
     clear
     echo "=== About ==="
@@ -40,8 +89,13 @@ function show_menu() {
     echo "3. Install Heroic"
     echo "4. Install EmuDeck"
     echo "5. Install CryoUtilities"
-    echo "6. About"
-    echo "7. Exit"
+    if [ -z "$file1" ] || [ -z "$file2" ]; then
+        echo "6. Store Keys"
+    else
+        echo "6. Write Keys"
+    fi
+    echo "7. About"
+    echo "8. Exit"
     echo "================="
 }
 
@@ -62,6 +116,12 @@ function execute_function() {
         Cryoutilities)
             installCryoutilities
             ;;
+        StoreKeys)
+            store_keys
+            ;;
+        WriteKeys)
+            write_keys
+            ;;
         About)
             show_about
             ;;
@@ -75,7 +135,7 @@ function execute_function() {
 if [ $# -eq 0 ]; then
     while true; do
         show_menu
-        read -p "Enter your choice (Decky, Lutris, Heroic, EmuDeck, Cryoutilities, About): " choice
+        read -p "Enter your choice (1-8): " choice
         execute_function "$choice"
     done
 else
@@ -84,4 +144,3 @@ else
         execute_function "$arg"
     done
 fi
-
