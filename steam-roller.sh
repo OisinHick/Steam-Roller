@@ -30,6 +30,11 @@ function installCryoutilities() {
     curl https://raw.githubusercontent.com/CryoByte33/steam-deck-utilities/main/install.sh | bash -s --
 }
 
+function installSGDBoop() {
+    # Install SteamGridDB Boop from flathub
+    flatpak install flathub com.steamgriddb.SGDBoop
+}
+
 function store_keys() {
     read -p "Enter the file path for prod keys: " file1
     read -p "Enter the file path for title keys: " file2
@@ -89,13 +94,14 @@ function show_menu() {
     echo "3. Install Heroic"
     echo "4. Install EmuDeck"
     echo "5. Install CryoUtilities"
+    echo "6. Install SGDBoop"
     if [ -z "$file1" ] || [ -z "$file2" ]; then
-        echo "6. Store Keys"
+        echo "7. Store Keys"
     else
-        echo "6. Write Keys"
+        echo "7. Write Keys"
     fi
-    echo "7. About"
-    echo "8. Exit"
+    echo "8. About"
+    echo "9. Exit"
     echo "================="
 }
 
@@ -116,10 +122,13 @@ function execute_function() {
         Cryoutilities)
             installCryoutilities
             ;;
-        StoreKeys)
+        SGDBoop)
+            installSGDBoop
+            ;;
+        Store\ Keys)
             store_keys
             ;;
-        WriteKeys)
+        Write\ Keys)
             write_keys
             ;;
         About)
@@ -132,7 +141,8 @@ function execute_function() {
 }
 
 # Check if an argument is provided
-if [ $# -eq 0 ]; then
+if
+ [ $# -eq 0 ]; then
     while true; do
         show_menu
         read -p "Enter your choice (1-8): " choice
