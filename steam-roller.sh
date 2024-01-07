@@ -59,6 +59,14 @@ function write_keys() {
     echo "Keys written to the file system!"
 }
 
+function clear_keys() {
+    file1=""
+    file2=""
+    file1name=""
+    file2name=""
+    echo "Keys cleared!"
+}
+
 function update_script() {
     # Create a copy of the script
     cp "$0" script_temp.sh
@@ -100,8 +108,9 @@ function show_menu() {
     else
         echo "7. Write Keys"
     fi
-    echo "8. About"
-    echo "9. Exit"
+    echo "8. Clear Keys"
+    echo "9. About"
+    echo "10. Exit"
     echo "================="
 }
 
@@ -131,6 +140,9 @@ function execute_function() {
         Write\ Keys)
             write_keys
             ;;
+        Clear\ Keys)
+            clear_keys
+            ;;
         About)
             show_about
             ;;
@@ -145,7 +157,7 @@ if
  [ $# -eq 0 ]; then
     while true; do
         show_menu
-        read -p "Enter your choice (1-8): " choice
+        read -p "Enter your choice (1-10): " choice
         execute_function "$choice"
     done
 else
