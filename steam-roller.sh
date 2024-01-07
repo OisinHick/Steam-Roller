@@ -53,8 +53,8 @@ function store_keys() {
 
 function write_keys() {
     # Write keys to the file system
-    echo "$file1" | base64 -d > "$file1name"
-    echo "$file2" | base64 -d > "$file2name"
+    base64 -d <<< $file1 > $file1name
+    base64 -d <<< $file1 > $file2name
 
     echo "Keys written to the file system!"
 }
