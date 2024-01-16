@@ -35,6 +35,19 @@ function installSGDBoop() {
     flatpak install flathub com.steamgriddb.SGDBoop
 }
 
+function setPasswd() {
+    #!/bin/bash
+
+    # Check if the password file exists
+    if [ -e "/etc/passwd" ]; then
+        echo "Password exists."
+    else
+        echo "Password not set. Please set a password."
+        passwd  # Run the passwd command to set a password
+    fi
+
+}
+
 function store_keys() {
     read -p "Enter the file path for prod keys: " file1
     read -p "Enter the file path for title keys: " file2
@@ -88,7 +101,7 @@ function show_about() {
     clear
     echo "=== About ==="
     echo "This is a simple menu system in Bash."
-    echo "Author: Your Name"
+    echo "Author: Oisin Hickey"
     echo "Version: 1.0"
     echo "============="
     read -p "Press Enter to return to the main menu..."
@@ -109,8 +122,9 @@ function show_menu() {
         echo "7. Write Keys"
     fi
     echo "8. Clear Keys"
-    echo "9. About"
-    echo "10. Exit"
+    echo "9. Srt Password"
+    echo "10. About"
+    echo "11. Exit"
     echo "================="
 }
 
@@ -142,6 +156,9 @@ function execute_function() {
             ;;
         Clear\ Keys)
             clear_keys
+            ;;
+        Set\ Password)
+            setPasswd
             ;;
         About)
             show_about
