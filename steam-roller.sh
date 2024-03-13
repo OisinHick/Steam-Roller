@@ -16,6 +16,11 @@ function installLutris() {
     flatpak install flathub net.lutris.Lutris
 }
 
+function installCrocShare() {
+    # Installs croc from git via curl https://github.com/schollz/croc.
+    curl https://getcroc.schollz.com | bash
+}
+
 function installHeroic() {
     flatpak install flathub com.heroicgameslauncher.hgl
 }
@@ -114,17 +119,18 @@ function show_menu() {
     echo "2. Install Lutris"
     echo "3. Install Heroic"
     echo "4. Install EmuDeck"
-    echo "5. Install CryoUtilities"
-    echo "6. Install SGDBoop"
+    echo "5. Install Croc Share"
+    echo "6. Install CryoUtilities"
+    echo "7. Install SGDBoop"
     if [ -z "$file1" ] || [ -z "$file2" ]; then
-        echo "7. Store Keys"
+        echo "8. Store Keys"
     else
-        echo "7. Write Keys"
+        echo "8. Write Keys"
     fi
-    echo "8. Clear Keys"
-    echo "9. Srt Password"
-    echo "10. About"
-    echo "11. Exit"
+    echo "9. Clear Keys"
+    echo "10. Srt Password"
+    echo "11. About"
+    echo "12. Exit"
     echo "================="
 }
 
@@ -141,6 +147,9 @@ function execute_function() {
             ;;
         EmuDeck)
             installEmuDeck
+            ;;
+        CrocShare)
+            installCrocShare
             ;;
         Cryoutilities)
             installCryoutilities
