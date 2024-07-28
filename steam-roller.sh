@@ -128,7 +128,7 @@ function show_menu() {
         echo "8. Write Keys"
     fi
     echo "9. Clear Keys"
-    echo "10. Srt Password"
+    echo "10. Set Password"
     echo "11. About"
     echo "12. Exit"
     echo "================="
@@ -136,41 +136,45 @@ function show_menu() {
 
 function execute_function() {
     case $1 in
-        Decky)
+        1 | "Decky" | "decky")
             installDecky
             ;;
-        Lutris)
+        2 | "Lutris" | "lutris")
             installLutris
             ;;
-        Heroic)
+        3 | "Heroic" | "heroic")
             installHeroic
             ;;
-        EmuDeck)
+        4 | "EmuDeck" | "emudeck")
             installEmuDeck
             ;;
-        CrocShare)
+        5 | "CrocShare" | "crocshare")
             installCrocShare
             ;;
-        Cryoutilities)
+        6 | "Cryoutilities" | "cryoutilities")
             installCryoutilities
             ;;
-        SGDBoop)
+        7 | "SGDBoop" | "sgdboop")
             installSGDBoop
             ;;
-        Store\ Keys)
-            store_keys
+        8)
+            if [ -z "$file1" ] || [ -z "$file2" ]; then
+                store_keys
+            else
+                write_keys
+            fi
             ;;
-        Write\ Keys)
-            write_keys
-            ;;
-        Clear\ Keys)
+        9 | "Clear Keys" | "clear keys")
             clear_keys
             ;;
-        Set\ Password)
+        10 | "Set Password" | "set password")
             setPasswd
             ;;
-        About)
+        11 | "About" | "about")
             show_about
+            ;;
+        12 | "Exit" | "exit")
+            exit 0
             ;;
         *)
             echo "Invalid choice. Please enter a valid option."
@@ -179,11 +183,10 @@ function execute_function() {
 }
 
 # Check if an argument is provided
-if
- [ $# -eq 0 ]; then
+if [ $# -eq 0 ]; then
     while true; do
         show_menu
-        read -p "Enter your choice (1-10): " choice
+        read -p "Enter your choice (1-12 or name): " choice
         execute_function "$choice"
     done
 else
