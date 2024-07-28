@@ -1,3 +1,4 @@
+![steam roller banner image](<Screenshot 2024-07-28 133911.png>)
 
 # Steam Roller
 
@@ -21,6 +22,14 @@ This gives the script execution permissions on your steam deck. Then to run type
 This will bring you to the menu screen where you can type the function you want. For example for the about screen you'd type "About". For the more technically inclined you may use this by passing in command arguements. For example:
 
     ./steam-roller.sh Decky
+
+or
+
+    ./steam-roller.sh 1
+
+## Backing up firmware keys:
+
+Currently the script has an ability to read and write firmware keys. e.g. for emudecks yuzu emulator as an example. This works by reading the keys, base64 encoding them and then writing the data to an original copy of the script and deleting the old one. The script that remains will have the keys contained within and the read keys will turn to write keys in the menu. 
 
 ## Contributing:
 
